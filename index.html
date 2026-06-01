@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Bahasa Inggris Kelas III</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --navy: #1e3a8a;
+            --light-blue: #60a5fa;
+            --yellow: #facc15;
+            --pastel-pink: #fbcfe8;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: var(--navy);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #172554;
+            transform: scale(1.05);
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 200px;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+
+        .flashcard-back {
+            background-color: var(--yellow);
+            transform: rotateY(180deg);
+        }
+
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+
+        #certificate-area {
+            background: white;
+            border: 10px double var(--navy);
+            position: relative;
+        }
+
+        .simulation-box {
+            min-height: 300px;
+            background: #e2e8f0;
+            border: 4px dashed #94a3b8;
+            position: relative;
+        }
+
+        .draggable-obj {
+            cursor: grab;
+            position: absolute;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- Header & Navigation -->
+    <header class="sticky-nav">
+        <nav class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-blue-900 text-white p-2 rounded-lg">
+                    <i class="fas fa-book-open text-xl"></i>
+                </div>
+                <span class="font-bold text-navy-900 hidden md:block">English Class III</span>
+            </div>
+            
+            <div class="flex space-x-2 md:space-x-4">
+                <button onclick="showSection('beranda')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Beranda</button>
+                <button onclick="showSection('materi')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Materi</button>
+                <button onclick="showSection('contoh')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Contoh</button>
+                <button onclick="showSection('kuis')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Kuis</button>
+                <button onclick="showSection('hasil')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Hasil</button>
+                <button onclick="showSection('pengembang')" class="nav-link px-3 py-2 rounded-full text-sm font-semibold hover:bg-blue-50">Profil</button>
+            </div>
+
+            <button onclick="toggleFullScreen()" class="p-2 text-navy hover:bg-blue-50 rounded-full transition">
+                <i class="fas fa-expand"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- SECTION: BERANDA -->
+        <section id="beranda" class="section-content">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12 bg-pink-50 p-8 rounded-[2rem] gap-8">
+                <div class="md:w-1/2">
+                    <span class="bg-yellow-400 text-yellow-900 px-4 py-1 rounded-full text-sm font-bold mb-4 inline-block">Halo Siswa Hebat!</span>
+                    <h1 class="text-4xl md:text-5xl font-bold text-blue-900 mb-4 leading-tight">I drink orange juice in the canteen</h1>
+                    <p class="text-lg text-slate-600 mb-8">Mari belajar tentang Preposisi Tempat dengan cara yang menyenangkan!</p>
+                    <button onclick="showSection('materi')" class="btn-primary px-8 py-4 rounded-2xl font-bold text-lg shadow-lg">Mulai Belajar <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 bg-blue-200 rounded-full flex items-center justify-center animate-pulse">
+                            <i class="fas fa-utensils text-7xl text-blue-800"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl shadow-xl">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500">Pencapaian</p>
+                                    <p class="font-bold text-sm">Pelajar Aktif</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="card p-6 flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-tasks text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500">Progress Belajar</p>
+                        <div class="w-32 h-2 bg-slate-100 rounded-full mt-1">
+                            <div id="main-progress-bar" class="h-full bg-blue-600 rounded-full progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <p id="progress-text" class="text-xs font-bold mt-1 text-blue-600">0% Selesai</p>
+                    </div>
+                </div>
+                <div class="card p-6 flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-trophy text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500">Nilai Tertinggi</p>
+                        <p id="high-score-display" class="text-xl font-bold text-slate-800">0</p>
+                    </div>
+                </div>
+                <div class="card p-6 flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-medal text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-500">Badge Terbaru</p>
+                        <p id="latest-badge" class="text-sm font-bold text-slate-800">Newbie</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="card overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1567529854338-fc097b962123?auto=format&fit=crop&q=80&w=200" alt="Canteen" class="w-full h-32 object-cover transition group-hover:scale-110">
+                    <div class="p-3 text-center font-semibold text-sm">Canteen</div>
+                </div>
+                <div class="card overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&q=80&w=200" alt="Juice" class="w-full h-32 object-cover transition group-hover:scale-110">
+                    <div class="p-3 text-center font-semibold text-sm">Orange Juice</div>
+                </div>
+                <div class="card overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=200" alt="Office" class="w-full h-32 object-cover transition group-hover:scale-110">
+                    <div class="p-3 text-center font-semibold text-sm">School Life</div>
+                </div>
+                <div class="card overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=200" alt="Books" class="w-full h-32 object-cover transition group-hover:scale-110">
+                    <div class="p-3 text-center font-semibold text-sm">Learning</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: MATERI -->
+        <section id="materi" class="section-content hidden">
+            <div class="max-w-4xl mx-auto">
+                <!-- Materi Navigation -->
+                <div class="flex space-x-2 mb-8 overflow-x-auto pb-2">
+                    <button onclick="showModule(1)" class="module-btn bg-blue-900 text-white px-6 py-2 rounded-full whitespace-nowrap">1. Mengenal</button>
+                    <button onclick="showModule(2)" class="module-btn bg-white text-navy px-6 py-2 rounded-full border border-blue-900 whitespace-nowrap">2. Pemahaman</button>
+                    <button onclick="showModule(3)" class="module-btn bg-white text-navy px-6 py-2 rounded-full border border-blue-900 whitespace-nowrap">3. Penggunaan</button>
+                    <button onclick="showModule(4)" class="module-btn bg-white text-navy px-6 py-2 rounded-full border border-blue-900 whitespace-nowrap">4. Petunjuk</button>
+                    <button onclick="showModule(5)" class="module-btn bg-white text-navy px-6 py-2 rounded-full border border-blue-900 whitespace-nowrap">5. Simulasi</button>
+                </div>
+
+                <!-- Module 1 -->
+                <div id="modul-1" class="module-section card p-8">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Mengenal Preposisi Tempat</h2>
+                    <p class="mb-6 text-slate-600">Preposisi tempat adalah kata yang menjelaskan lokasi suatu benda atau orang. Berikut adalah daftar yang sering digunakan:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">Next to / Beside</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Di samping</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">Against</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Bersandar / Menempel</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">Behind</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Di belakang</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">In front of</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Di depan</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">Across</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Di seberang</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front bg-blue-100 border-2 border-blue-200">
+                                    <span class="text-xl font-bold">Between</span>
+                                </div>
+                                <div class="flashcard-back">
+                                    <span class="text-lg font-bold">Di antara (2 benda)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div id="modul-2" class="module-section hidden card p-8">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Memahami Makna</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 p-4 rounded-xl bg-green-50">
+                            <div class="w-10 h-10 bg-green-600 text-white rounded-full flex-shrink-0 flex items-center justify-center font-bold">1</div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-1 text-green-900">Posisi Statis</h3>
+                                <p>Next to, behind, in front of, dan between menunjukkan hubungan posisi tetap antara dua benda.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 rounded-xl bg-orange-50">
+                            <div class="w-10 h-10 bg-orange-600 text-white rounded-full flex-shrink-0 flex items-center justify-center font-bold">2</div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-1 text-orange-900">Posisi Kontak</h3>
+                                <p>Against secara spesifik menekankan adanya sentuhan fisik (misal: "The painting is against the wall").</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 p-4 rounded-xl bg-purple-50">
+                            <div class="w-10 h-10 bg-purple-600 text-white rounded-full flex-shrink-0 flex items-center justify-center font-bold">3</div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-1 text-purple-900">Posisi Transisi</h3>
+                                <p>Across menunjukkan jarak yang memisahkan, yang mengharuskan kita "menyeberang" (jalan/sungai).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div id="modul-3" class="module-section hidden card p-8 text-center">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Struktur Kalimat</h2>
+                    <div class="bg-blue-900 text-white p-6 rounded-2xl mb-8">
+                        <p class="text-xl font-mono">Subject + To Be + Preposition + Object</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 border-2 border-dashed border-blue-200 rounded-xl flex flex-col md:flex-row items-center justify-between">
+                            <p class="text-lg">The table is <span class="font-bold text-blue-600">next to</span> the sofa.</p>
+                            <button onclick="speak('The table is next to the sofa')" class="p-3 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100"><i class="fas fa-volume-up"></i> Dengarkan</button>
+                        </div>
+                        <div class="p-4 border-2 border-dashed border-blue-200 rounded-xl flex flex-col md:flex-row items-center justify-between">
+                            <p class="text-lg">My house is <span class="font-bold text-blue-600">across</span> the bank.</p>
+                            <button onclick="speak('My house is across the bank')" class="p-3 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100"><i class="fas fa-volume-up"></i> Dengarkan</button>
+                        </div>
+                        <div class="p-4 border-2 border-dashed border-blue-200 rounded-xl flex flex-col md:flex-row items-center justify-between">
+                            <p class="text-lg">The cat is hiding <span class="font-bold text-blue-600">behind</span> the curtain.</p>
+                            <button onclick="speak('The cat is hiding behind the curtain')" class="p-3 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100"><i class="fas fa-volume-up"></i> Dengarkan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div id="modul-4" class="module-section hidden card p-8">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Memberikan Petunjuk Arah</h2>
+                    <div class="bg-yellow-50 border-l-8 border-yellow-400 p-6 rounded-r-2xl mb-6">
+                        <h3 class="font-bold mb-2">Tips:</h3>
+                        <p>Gunakan kata kerja perintah (Imperative) seperti: <b>walk, turn, go</b>.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl">
+                        <p class="italic text-lg mb-4">"Go straight, then turn left. You will see a bakery. The post office is next to the bakery, and the park is across from it."</p>
+                        <button onclick="speak('Go straight, then turn left. You will see a bakery. The post office is next to the bakery, and the park is across from it.')" class="btn-primary px-6 py-2 rounded-full shadow-md"><i class="fas fa-play mr-2"></i> Play Audio</button>
+                    </div>
+                </div>
+
+                <!-- Module 5: Simulasi -->
+                <div id="modul-5" class="module-section hidden card p-8">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Mini Simulasi</h2>
+                    <p class="mb-4 text-slate-600">Klik lokasi untuk menempatkan <b>Gelas Jus</b>!</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                        <button onclick="placeObject('Beside Table')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">Beside Table</button>
+                        <button onclick="placeObject('In front of Door')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">In front of Door</button>
+                        <button onclick="placeObject('Behind Chair')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">Behind Chair</button>
+                        <button onclick="placeObject('Against the wall')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">Against Wall</button>
+                        <button onclick="placeObject('Between Books')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">Between Books</button>
+                        <button onclick="placeObject('Across the TV')" class="p-3 bg-blue-100 rounded-xl hover:bg-blue-200 font-bold">Across TV</button>
+                    </div>
+                    <div id="sim-display" class="simulation-box rounded-2xl flex items-center justify-center text-slate-500 font-bold text-xl">
+                        Pilih Lokasi di Atas
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button id="prev-btn" class="px-6 py-2 rounded-full border border-blue-900 text-navy font-bold disabled:opacity-30">Previous</button>
+                    <button id="next-btn" class="px-6 py-2 rounded-full bg-blue-900 text-white font-bold">Next Module</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: CONTOH SOAL (4 BUAH) -->
+        <section id="contoh" class="section-content hidden">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-blue-900 mb-12">4 Contoh Soal Pemahaman</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card p-6 border-t-8 border-blue-500">
+                        <span class="text-blue-500 font-bold">Contoh 1</span>
+                        <div class="h-40 bg-slate-100 rounded-xl my-4 flex items-center justify-center text-4xl">🐱 📦</div>
+                        <p class="font-bold">The cat is NEXT TO the box.</p>
+                        <p class="text-sm text-slate-500">Kucing berada di samping kotak.</p>
+                    </div>
+                    <div class="card p-6 border-t-8 border-yellow-500">
+                        <span class="text-yellow-500 font-bold">Contoh 2</span>
+                        <div class="h-40 bg-slate-100 rounded-xl my-4 flex items-center justify-center text-4xl">🌳 🏠 🌳</div>
+                        <p class="font-bold">The house is BETWEEN the trees.</p>
+                        <p class="text-sm text-slate-500">Rumah berada di antara pohon-pohon.</p>
+                    </div>
+                    <div class="card p-6 border-t-8 border-green-500">
+                        <span class="text-green-500 font-bold">Contoh 3</span>
+                        <div class="h-40 bg-slate-100 rounded-xl my-4 flex items-center justify-center text-4xl">🚲 🧱</div>
+                        <p class="font-bold">The bike is AGAINST the wall.</p>
+                        <p class="text-sm text-slate-500">Sepeda bersandar pada tembok.</p>
+                    </div>
+                    <div class="card p-6 border-t-8 border-red-500">
+                        <span class="text-red-500 font-bold">Contoh 4</span>
+                        <div class="h-40 bg-slate-100 rounded-xl my-4 flex items-center justify-center text-4xl">🚶 🛣️ 🏥</div>
+                        <p class="font-bold">The man is ACROSS the hospital.</p>
+                        <p class="text-sm text-slate-500">Pria itu berada di seberang rumah sakit.</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <button onclick="showSection('kuis')" class="btn-primary px-10 py-4 rounded-full font-bold">Sudah Paham? Mari Kuis!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: KUIS -->
+        <section id="kuis" class="section-content hidden">
+            <div class="max-w-3xl mx-auto">
+                <!-- Registration -->
+                <div id="quiz-reg" class="card p-8 text-center">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">Siap untuk Tantangan?</h2>
+                    <p class="mb-8">Masukkan data dirimu untuk memulai kuis 40 soal.</p>
+                    <div class="space-y-4 max-w-sm mx-auto">
+                        <input type="text" id="student-name" placeholder="Nama Lengkap" class="w-full p-4 border rounded-2xl focus:ring-2 focus:ring-blue-400 outline-none">
+                        <input type="text" id="student-class" placeholder="Kelas (Contoh: III-A)" class="w-full p-4 border rounded-2xl focus:ring-2 focus:ring-blue-400 outline-none">
+                        <button onclick="startQuiz()" class="w-full btn-primary py-4 rounded-2xl font-bold shadow-lg">Mulai Sekarang</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Area -->
+                <div id="quiz-area" class="hidden">
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-blue-900" id="q-count">Soal 1/40</span>
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold" id="q-timer">Waktu Berjalan...</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+                            <div id="quiz-progress" class="h-full bg-blue-600 transition-all" style="width: 2.5%"></div>
+                        </div>
+                    </div>
+
+                    <div class="card p-8 mb-8">
+                        <h3 id="question-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-8">Loading question...</h3>
+                        <div id="options-container" class="grid grid-cols-1 gap-4">
+                            <!-- Options injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: HASIL & SERTIFIKAT -->
+        <section id="hasil" class="section-content hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    <div class="card p-8 text-center">
+                        <h2 class="text-2xl font-bold mb-4 text-blue-900">Statistik Belajar</h2>
+                        <canvas id="scoreChart" width="400" height="300" class="mx-auto"></canvas>
+                        <p class="text-sm text-slate-500 mt-4">Grafik perkembangan 5 kuis terakhir</p>
+                    </div>
+                    
+                    <div id="certificate-area" class="p-8 text-center flex flex-col justify-center items-center">
+                        <i class="fas fa-certificate text-6xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-3xl font-serif font-bold uppercase mb-2">Sertifikat</h3>
+                        <p class="text-slate-500 italic">Diberikan kepada:</p>
+                        <p id="cert-name" class="text-2xl font-bold border-b-2 border-slate-900 px-10 mb-4">SISWA TELADAN</p>
+                        <p class="max-w-xs">Telah menyelesaikan materi "I drink orange juice in the canteen" dengan hasil yang membanggakan.</p>
+                        <div class="mt-6 flex space-x-8">
+                            <div>
+                                <p class="text-xs text-slate-500">SKOR</p>
+                                <p id="cert-score" class="text-2xl font-bold text-blue-600">0</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">TANGGAL</p>
+                                <p id="cert-date" class="text-sm font-bold">2023-10-27</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="showSection('kuis')" class="px-8 py-3 bg-blue-900 text-white rounded-full font-bold shadow-lg"><i class="fas fa-redo mr-2"></i> Ulangi Kuis</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: PENGEMBANG -->
+        <section id="pengembang" class="section-content hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="card p-10 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-24 bg-blue-900"></div>
+                    <div class="relative z-10">
+                        <div class="w-32 h-32 bg-white rounded-full mx-auto border-4 border-white shadow-xl flex items-center justify-center overflow-hidden mb-6">
+                            <i class="fas fa-user-tie text-5xl text-blue-900"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-slate-800">Ana S.pd</h2>
+                        <p class="text-blue-600 font-bold mb-4">Pengembang Media Pembelajaran</p>
+                        <div class="w-20 h-1 bg-yellow-400 mx-auto mb-6"></div>
+                        <h3 class="text-xl font-bold text-slate-700 mb-2">MEDIA PEMBELAJARAN BAHASA INGGRIS KELAS III</h3>
+                        <p class="text-slate-600 mb-8">Aplikasi ini dirancang untuk memudahkan siswa kelas III dalam memahami penggunaan kata depan (prepositions) dalam konteks sehari-hari.</p>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">© 2023 Ana S.pd - Media Pembelajaran Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- State Management ---
+        let currentModule = 1;
+        let currentQuestion = 0;
+        let score = 0;
+        let quizData = [];
+        let scoreHistory = JSON.parse(localStorage.getItem('english_scores')) || [];
+        let studentProfile = JSON.parse(localStorage.getItem('student_profile')) || { name: '', class: '', progress: 0 };
+
+        // --- Question Generator (40 Questions based on material) ---
+        function generateQuestions() {
+            const pool = [
+                { q: "Where is the juice? It is ... the table.", a: "next to", b: "under", c: "between", d: "against", correct: "a" },
+                { q: "The painting is ... the wall.", a: "in front of", b: "against", c: "across", d: "between", correct: "b" },
+                { q: "My house is ... the bank (there is a road between them).", a: "next to", b: "across", c: "near", d: "behind", correct: "b" },
+                { q: "The teacher stands ... the students.", a: "in front of", b: "against", c: "between", d: "near", correct: "a" },
+                { q: "The pencil is ... the eraser and the pen.", a: "across", b: "next to", c: "between", d: "behind", correct: "c" },
+                { q: "The cat is hiding ... the curtain.", a: "in front of", b: "behind", c: "against", d: "between", correct: "b" },
+                { q: "I drink orange juice in the ...", a: "library", b: "classroom", c: "canteen", d: "bedroom", correct: "c" },
+                { q: "The school is ... the park.", a: "near", b: "between", c: "against", d: "across", correct: "a" },
+                { q: "Turn left, the bakery is ... the post office.", a: "next to", b: "against", c: "across", d: "between", correct: "a" },
+                { q: "The chair is ... the table.", a: "beside", b: "between", c: "against", d: "across", correct: "a" }
+            ];
+            
+            // Replicating/Shuffling to get 40
+            let finalQuestions = [];
+            for(let i=0; i<4; i++) {
+                pool.forEach(item => {
+                    finalQuestions.push({...item, id: Math.random()});
+                });
+            }
+            return finalQuestions.sort(() => Math.random() - 0.5);
+        }
+
+        // --- Core Functions ---
+        function showSection(id) {
+            document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            window.scrollTo(0,0);
+            
+            if(id === 'hasil') {
+                updateChart();
+                updateCertificate();
+            }
+            
+            // Update Progress on Beranda
+            if(id === 'beranda') updateBeranda();
+        }
+
+        function showModule(num) {
+            currentModule = num;
+            document.querySelectorAll('.module-section').forEach(m => m.classList.add('hidden'));
+            document.getElementById(`modul-${num}`).classList.remove('hidden');
+            
+            // Update Buttons
+            document.querySelectorAll('.module-btn').forEach((btn, idx) => {
+                if(idx + 1 === num) {
+                    btn.classList.add('bg-blue-900', 'text-white');
+                    btn.classList.remove('bg-white', 'text-navy');
+                } else {
+                    btn.classList.remove('bg-blue-900', 'text-white');
+                    btn.classList.add('bg-white', 'text-navy');
+                }
+            });
+
+            document.getElementById('prev-btn').disabled = (num === 1);
+            if(num === 5) {
+                document.getElementById('next-btn').innerText = "Mulai Kuis";
+                document.getElementById('next-btn').onclick = () => showSection('kuis');
+            } else {
+                document.getElementById('next-btn').innerText = "Next Module";
+                document.getElementById('next-btn').onclick = () => showModule(currentModule + 1);
+            }
+
+            // Update Progress Tracking
+            let progress = Math.round((num / 5) * 100);
+            if(progress > studentProfile.progress) {
+                studentProfile.progress = progress;
+                localStorage.setItem('student_profile', JSON.stringify(studentProfile));
+            }
+        }
+
+        function speak(text) {
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = 'en-US';
+            window.speechSynthesis.speak(msg);
+        }
+
+        function placeObject(loc) {
+            const display = document.getElementById('sim-display');
+            display.innerHTML = `<div class="bg-orange-400 p-4 rounded-xl text-white shadow-lg animate-bounce">🍊 Orange Juice ${loc}</div>`;
+            display.classList.remove('text-slate-500');
+            display.style.backgroundColor = "#fff";
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // --- Quiz Logic ---
+        function startQuiz() {
+            const name = document.getElementById('student-name').value;
+            const cls = document.getElementById('student-class').value;
+            if(!name || !cls) return alert("Isi nama dan kelas dulu ya!");
+            
+            studentProfile.name = name;
+            studentProfile.class = cls;
+            localStorage.setItem('student_profile', JSON.stringify(studentProfile));
+            
+            document.getElementById('quiz-reg').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            
+            quizData = generateQuestions();
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById('q-count').innerText = `Soal ${currentQuestion + 1}/40`;
+            document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1)/40)*100}%`;
+            document.getElementById('question-text').innerText = q.q;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            ['a', 'b', 'c', 'd'].forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "p-5 text-left border-2 border-slate-200 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition font-medium flex items-center";
+                btn.innerHTML = `<span class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center mr-4 text-sm font-bold">${opt.toUpperCase()}</span> ${q[opt]}`;
+                btn.onclick = () => handleAnswer(opt);
+                container.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(choice) {
+            const correct = quizData[currentQuestion].correct;
+            if(choice === correct) {
+                score += 2.5; // 40 questions * 2.5 = 100
+                alertFeedback(true);
+            } else {
+                alertFeedback(false);
+            }
+            
+            currentQuestion++;
+            if(currentQuestion < 40) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function alertFeedback(isCorrect) {
+            // Minimal feedback for flow
+            console.log(isCorrect ? "Correct!" : "Wrong!");
+        }
+
+        function finishQuiz() {
+            scoreHistory.push({
+                score: score,
+                date: new Date().toLocaleDateString()
+            });
+            if(scoreHistory.length > 5) scoreHistory.shift();
+            localStorage.setItem('english_scores', JSON.stringify(scoreHistory));
+            
+            showSection('hasil');
+        }
+
+        // --- Visualization ---
+        function updateChart() {
+            const canvas = document.getElementById('scoreChart');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if(scoreHistory.length === 0) return;
+
+            const padding = 40;
+            const width = canvas.width - (padding * 2);
+            const height = canvas.height - (padding * 2);
+            const stepX = width / 4;
+            
+            // Draw Axis
+            ctx.beginPath();
+            ctx.strokeStyle = '#94a3b8';
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw Line
+            ctx.beginPath();
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 3;
+            scoreHistory.forEach((item, i) => {
+                const x = padding + (i * stepX);
+                const y = (canvas.height - padding) - (item.score / 100 * height);
+                if(i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+                
+                // Dots
+                ctx.fillStyle = '#facc15';
+                ctx.fillRect(x-4, y-4, 8, 8);
+            });
+            ctx.stroke();
+        }
+
+        function updateCertificate() {
+            document.getElementById('cert-name').innerText = studentProfile.name || "PELAJAR HEBAT";
+            document.getElementById('cert-score').innerText = score;
+            document.getElementById('cert-date').innerText = new Date().toLocaleDateString();
+        }
+
+        function updateBeranda() {
+            document.getElementById('main-progress-bar').style.width = `${studentProfile.progress}%`;
+            document.getElementById('progress-text').innerText = `${studentProfile.progress}% Selesai`;
+            
+            let maxScore = scoreHistory.length > 0 ? Math.max(...scoreHistory.map(o => o.score)) : 0;
+            document.getElementById('high-score-display').innerText = maxScore;
+            
+            let badge = "Newbie";
+            if(maxScore >= 90) badge = "Master";
+            else if(maxScore >= 70) badge = "Expert";
+            else if(maxScore >= 50) badge = "Learner";
+            document.getElementById('latest-badge').innerText = badge;
+        }
+
+        // Initial View
+        window.onload = () => {
+            updateBeranda();
+            showSection('beranda');
+        };
+
+        // Navigation listeners
+        document.getElementById('prev-btn').onclick = () => showModule(currentModule - 1);
+        document.getElementById('next-btn').onclick = () => showModule(currentModule + 1);
+
+    </script>
+</body>
+</html></html>
